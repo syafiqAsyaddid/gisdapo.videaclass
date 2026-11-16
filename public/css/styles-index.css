@@ -1,0 +1,163 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 18px;
+    font-family: arial, sans-serif;
+  }
+.container-index{
+    /* background: url('{{ asset("./img/Peta.jpg") }}'); */
+    height: 720px;
+    width: 100%;
+    background-size:100% 720px ;
+    display: block;
+}
+select{
+    width: 100%;
+    padding: 15px 10px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+}
+select:disabled{
+    background-color: #ccc;
+}
+.col-25{
+    padding: 15px;
+}
+.container{
+    margin: 10px 10px;
+}
+.map{
+    float: left;
+    border: 1px solid black;
+    display: inline-block;
+    margin-right: 10px;
+    padding: 0;
+}
+.container-map{
+    width: 90%;
+    height: 100%;
+    margin: auto;
+    margin-bottom: 10px;
+}
+.logo{
+    display: inline-block;
+    margin-left: 34px;
+    margin-top: 5px;
+    float: left;
+}
+.logo img{
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+}
+.map img{
+    display: block;
+}
+.row{
+    margin-top: 10px;
+}
+.header{
+    background-color: #00844c; 
+    position: sticky;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    padding: 0px 0px;
+    overflow: hidden;
+    text-align: center;
+}
+.header h1, .header span {
+    display: inline-block;
+    font-size: 30px;
+}
+.logo img{
+    height: 100%;
+    width: 90px;
+}
+.logo, .logo-text{
+    margin: auto;
+    display: inline-block;
+    float: left;
+    padding: auto;
+}
+.logo-container{
+    display: inline-block;
+    align-content: center;
+    text-align: center;
+}
+.big-header{
+    width: 100%;
+    height: 720px;
+    background-size: 100% 720px;
+    display: block;
+}
+.footer{
+    background-color: #00844c;
+    font-size: 14px;
+    width: 100%;
+    padding: 0px 0px;
+    overflow: hidden;
+}
+.rows{
+    display: inline-block;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+    width: 100%;
+    margin: auto;
+    padding: 20px 150px;
+}
+.col{
+    width: 50%;
+    padding: 0 10px;
+    margin: auto;
+}
+/* .card{
+    border: 2px solid #ccc;
+    width: 60%;
+    margin: auto;
+    border-radius: 10px;
+    margin-top: 150px;
+    padding: 20px;
+    box-shadow:  0px 3px 8px rgba(37, 34, 34, 0.24);
+} */
+/* .card h1{
+    text-align: center;
+    padding: 5px;
+    border-radius: 6px;
+
+}
+.card-content{
+    margin-top: 15px;
+}
+.card-content *{
+    padding: 5px;
+}
+.card-content ul{
+    padding-left: 20px;
+}
+.card-content span{
+    display: block;
+}
+.card-content span::after{
+    display: block;
+    content: "";
+    border: 1px solid #ccc;
+    width: 30%;
+} */
+.input-href{
+    background-color: #0253be;
+    margin: auto;
+}
+.link{
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 8px;
+}
+.footer{
+    position: sticky;
+    width: 100%;
+    background-color: #00844c;
+    padding: 0px 0px;
+    overflow: hidden;
+    text-align: center;
+}
