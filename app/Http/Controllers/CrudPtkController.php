@@ -39,6 +39,8 @@ class CrudPtkController extends Controller
 
         Ptk::create($attributes);
 
+        \App\Models\VerifikasiData::catat($sekolah->id, 'PTK', 'Penambahan data PTK: ' . $attributes['nama']);
+
         return redirect()->back();
     }
 
@@ -73,6 +75,8 @@ class CrudPtkController extends Controller
         unset($attributes['id']);
 
         Ptk::find($id)->update($attributes);
+
+        \App\Models\VerifikasiData::catat($sekolah->id, 'PTK', 'Pembaruan data PTK: ' . $attributes['nama']);
 
         return redirect()->back();
     }

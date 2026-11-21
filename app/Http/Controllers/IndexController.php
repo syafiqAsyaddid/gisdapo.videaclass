@@ -70,18 +70,22 @@ class IndexController extends Controller
 
     public function storeKcd()
     {
-
         $attributes = request()->validate([
             'username' => 'required',
             'password' => 'required'
         ]);
 
-        $attributes['hak_akses_id'] = 3;
-
         if (auth()->attempt($attributes)) {
-            session()->regenerate();
+            if (in_array(auth()->user()->hak_akses_id, [3, 4])) {
+                session()->regenerate();
 
-            return redirect('/kcd/kecamatan');
+                if (auth()->user()->hak_akses_id == 4) {
+                    return redirect('/kcd/verifikasi');
+                }
+
+                return redirect('/kcd/kecamatan');
+            }
+            auth()->logout();
         }
 
         throw ValidationException::withMessages([

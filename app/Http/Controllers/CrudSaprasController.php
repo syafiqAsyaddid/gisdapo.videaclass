@@ -49,6 +49,9 @@ class CrudSaprasController extends Controller
                 'foto' => $nama_foto
             ]);
         }
+
+        \App\Models\VerifikasiData::catat($sekolah->id, 'Sarpras', 'Penambahan data Sarpras: ' . $attributes['nama']);
+
         return redirect()->back();
     }
     public function createSapras_paramter(Request $request)

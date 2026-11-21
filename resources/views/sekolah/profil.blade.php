@@ -2,6 +2,13 @@
     
     <div class="d-flex align-items-center mb-4">
         <h4 class="fw-bold mb-0">Profil Sekolah {{ strtoupper($data->nama) }}</h4>
+        @if(($data->status_verifikasi ?? 'pending') === 'approved')
+            <span class="badge bg-success ms-3"><i class="fa fa-check-circle me-1"></i> Terverifikasi</span>
+        @elseif(($data->status_verifikasi ?? 'pending') === 'rejected')
+            <span class="badge bg-danger ms-3"><i class="fa fa-exclamation-triangle me-1"></i> Perlu Revisi</span>
+        @else
+            <span class="badge bg-warning text-dark ms-3"><i class="fa fa-clock me-1"></i> Menunggu Verifikasi</span>
+        @endif
         @can('kcd')
             @if(isset($kecamatan))
                 <a href="/kcd/kecamatan/{{ $kecamatan->id }}/sekolah" class="btn btn-sm btn-outline-secondary ms-auto">

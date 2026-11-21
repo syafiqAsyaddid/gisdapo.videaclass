@@ -83,4 +83,9 @@ class Sekolah extends Model
     {
         return $this->hasMany(Ruangan::class);
     }
+
+    public function verifikasi_data()
+    {
+        return $this->hasMany(VerifikasiData::class, 'sekolah_id');
+    }
 }

@@ -18,6 +18,7 @@ class HakAksesSeeder extends Seeder
             ['id' => 1, 'hak_akses' => 'operator sekolah'],
             ['id' => 2, 'hak_akses' => 'kepsek'],
             ['id' => 3, 'hak_akses' => 'operator kcd'],
+            ['id' => 4, 'hak_akses' => 'supervisor'],
         ];
 
         foreach ($roles as $role) {

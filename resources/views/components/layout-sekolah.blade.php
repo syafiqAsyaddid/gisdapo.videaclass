@@ -201,6 +201,12 @@
                     @endif
                 </li>
 
+                @if(auth()->user()->can('sekolah'))
+                    <li>
+                        <a href="{{ route('sekolah.verifikasi.index') }}"><i class="fa fa-check-circle me-2"></i> Status Verifikasi</a>
+                    </li>
+                @endif
+
                 <li>
                      <a href="#exportSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fa fa-download me-2"></i> Export Data

@@ -52,6 +52,8 @@ class UpdateSekolahController extends Controller
 
         $sekolah->update($attributes);
 
+        \App\Models\VerifikasiData::catat($sekolah->id, 'Profil Sekolah', 'Pembaruan data profil sekolah: ' . $sekolah->nama);
+
         return redirect()->back();
     }
 }

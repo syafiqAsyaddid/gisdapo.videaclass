@@ -77,6 +77,8 @@ class CrudGuruController extends Controller
             $this->updateKebutuhan($mid, $sekolah->id);
         }
 
+        \App\Models\VerifikasiData::catat($sekolah->id, 'Guru', 'Penambahan data Guru: ' . $attributes['nama']);
+
         return redirect()->back();
     }
 

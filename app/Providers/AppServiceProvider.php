@@ -36,7 +36,15 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define('kcd', function (User $user) {
+            return in_array($user->hak_akses_id, [3, 4]);
+        });
+
+        Gate::define('admin_kcd', function (User $user) {
             return $user->hak_akses_id == 3;
+        });
+
+        Gate::define('supervisor', function (User $user) {
+            return $user->hak_akses_id == 4;
         });
 
         // Share Profil Lembaga to All Views (Cached)

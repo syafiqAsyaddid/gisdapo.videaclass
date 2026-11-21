@@ -114,11 +114,25 @@
                    <img src="{{ asset('./images/logotrans.png') }}" alt="Logo" width="80" height="auto" class="mb-2">
                 @endif
                 <h5 class="fw-bold">{{ isset($profil_lembaga) ? $profil_lembaga->nama_lembaga : 'Satuan Data Cadisdik' }}</h5>
+                @auth
+                    <span class="badge {{ auth()->user()->hak_akses_id == 4 ? 'bg-info text-dark' : 'bg-warning text-dark' }} mt-1">
+                        {{ auth()->user()->hak_akses_id == 4 ? 'SUPERVISOR' : 'ADMIN KCD' }}
+                    </span>
+                @endauth
             </div>
 
             <ul class="list-unstyled components">
                 <li>
                     <a href="{{ url('/kcd/kecamatan') }}"><i class="fa fa-home me-2"></i> Dashboard</a>
+                </li>
+                <li>
+                    @php $pendingVerif = \App\Models\VerifikasiData::where('status', 'pending')->count(); @endphp
+                    <a href="{{ route('kcd.verifikasi.index') }}" class="d-flex justify-content-between align-items-center">
+                        <span><i class="fa fa-check-double me-2"></i> Verifikasi Data</span>
+                        @if($pendingVerif > 0)
+                            <span class="badge bg-warning text-dark rounded-pill">{{ $pendingVerif }}</span>
+                        @endif
+                    </a>
                 </li>
                 <li>
                     <a href="#pengaturanSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -129,6 +143,9 @@
                         <li><a href="{{ route('kcd.master.kecamatan') }}" class="ps-5 small">Wilayah Kerja</a></li>
                         <li><a href="{{ route('kcd.master.kategori') }}" class="ps-5 small">Kategori Sekolah</a></li>
                         <li><a href="{{ route('kcd.master.jenjang') }}" class="ps-5 small">Jenjang Pendidikan</a></li>
+                        @can('admin_kcd')
+                            <li><a href="{{ route('kcd.supervisor.index') }}" class="ps-5 small">Akun Supervisor</a></li>
+                        @endcan
                     </ul>
                 </li>
                 <li>

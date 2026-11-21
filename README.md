@@ -25,6 +25,9 @@ Aplikasi berbasis web untuk pemetaan geografis (GIS) sebaran sekolah dan pengelo
 - **Statistik & Ekspor Data:**
   - Grafik dan rekapitulasi Statistik Sarana & Prasarana sekolah.
   - Ekspor laporan Excel (`.xlsx`) untuk Data Akun User, PTK, Guru, Rombel, Ruangan, Sarpras, dan Prestasi.
+- **Verifikasi & Approval Data (Admin KCD & Supervisor):**
+  - Pengelolaan akun **Supervisor** khusus oleh Admin KCD.
+  - Peninjauan (*Approve / Reject*) pengajuan verifikasi perubahan data dari sekolah.
 
 ### 3. Panel Sekolah (Operator Sekolah & Kepala Sekolah)
 - **Profil Sekolah:** Pengelolaan identitas sekolah, NPSN, NSS, Kepala Sekolah, foto profil, alamat, kontak, dan jenjang yang dilayani.
@@ -63,11 +66,18 @@ Aplikasi berbasis web untuk pemetaan geografis (GIS) sebaran sekolah dan pengelo
 
 ## Panduan Instalasi Lokal
 
-1. **Clone repositori ini:**
+1. **Clone repositori utama dari GitHub:**
+   Buka terminal/CMD di folder `htdocs` XAMPP (misalnya `C:\xampp\htdocs` atau `D:\xampp\htdocs`), lalu jalankan:
    ```bash
-   git clone <url-repository-anda>
-   cd sebaran-sekolah-main1
+   git clone https://github.com/syafiqAsyaddid/gisdapo.videaclass.git
+   cd gisdapo.videaclass
    ```
+
+   > **Catatan untuk Website 2 (`cadisdik`):**
+   > Karena folder `cadisdik` terhubung ke repositori terpisah, jika folder `cadisdik` kosong setelah proses clone, jalankan perintah berikut di dalam folder project:
+   > ```bash
+   > git clone https://github.com/VideaClass/cadisdik.git cadisdik
+   > ```
 
 2. **Instal dependensi PHP melalui Composer:**
    ```bash
@@ -76,19 +86,23 @@ Aplikasi berbasis web untuk pemetaan geografis (GIS) sebaran sekolah dan pengelo
 
 3. **Salin file konfigurasi environment:**
    ```bash
-   cp .env.example .env
+   copy .env.example .env
    ```
+   *(Untuk macOS/Linux gunakan `cp .env.example .env`)*
 
-4. **Konfigurasi database di file `.env`:**
-   Buat database baru di MySQL/phpMyAdmin (misalnya `sebaran_sekolah`), lalu sesuaikan pengaturan pada `.env`:
-   ```env
-   DB_CONNECTION=mysql
-   DB_HOST=127.0.0.1
-   DB_PORT=3306
-   DB_DATABASE=sebaran_sekolah
-   DB_USERNAME=root
-   DB_PASSWORD=
-   ```
+4. **Buat & konfigurasi database MySQL:**
+   - Jalankan **Apache** dan **MySQL** melalui **XAMPP Control Panel**.
+   - Buka `http://localhost/phpmyadmin` lalu buat database baru bernama **`sebaran_sekolah`**.
+   - Pastikan pengaturan database di `.env` sudah sesuai:
+     ```env
+     DB_CONNECTION=mysql
+     DB_HOST=127.0.0.1
+     DB_PORT=3306
+     DB_DATABASE=sebaran_sekolah
+     DB_USERNAME=root
+     DB_PASSWORD=
+     ```
+   *(Konfigurasi database untuk Website 2 di `cadisdik/application/config/database.php` juga mengarah ke database `sebaran_sekolah` dengan user `root` tanpa password.)*
 
 5. **Generate Application Key & Storage Symlink:**
    ```bash
@@ -101,27 +115,51 @@ Aplikasi berbasis web untuk pemetaan geografis (GIS) sebaran sekolah dan pengelo
    php artisan migrate --seed
    ```
 
-7. **Jalankan Server Lokal:**
+7. **Jalankan Server Lokal (Website 1):**
    ```bash
    php artisan serve
    ```
-   Akses aplikasi di browser melalui: `http://127.0.0.1:8000`
+   *(Di Windows, Anda juga dapat mengklik dua kali file `start.bat` untuk menyalakan MySQL, menjalankan server Laravel, dan membuka browser secara otomatis.)*
 
 ---
 
-## Daftar Role & Akun Default (Hasil Seeder)
+## Link Akses & Akun Default (2 Website)
 
-Sistem memiliki **3 hak akses (role)** dengan pembagian wewenang sebagai berikut:
+### 1. Website Utama — Satuan Data Mandiri & Peta Sebaran Sekolah (Laravel 8)
+Pastikan `php artisan serve` sedang berjalan.
+
+- **Beranda / Peta Sebaran Sekolah (WebGIS):** `http://127.0.0.1:8000`
+- **Login Admin KCD & Supervisor:** `http://127.0.0.1:8000/login-kcd`
+- **Login Sekolah (Operator & Kepala Sekolah):** `http://127.0.0.1:8000/login-sekolah`
+
+Sistem memiliki **4 hak akses (role)** default hasil seeder dengan pembagian wewenang sebagai berikut:
 
 | Role | Halaman Login | Kecamatan & Sekolah | Username | Password | Hak Akses |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Admin / Operator KCD (Dinas)** | `/login-kcd` | *(Langsung login)* | `kcd` | `admin` | Akses penuh pengaturan profil lembaga, sinkronisasi wilayah kerja, master data, kelola sekolah, statistik, & ekspor seluruh data |
-| **Operator Sekolah** | `/login-sekolah` | Pilih Kecamatan & Sekolah terkait | `operator12345678` | `123456` | Akses penuh **Lihat & Kelola (Tambah/Edit/Hapus/Impor/Ekspor)** seluruh data pada sekolahnya |
+| **Admin / Operator KCD (Dinas)** | `/login-kcd` | *(Langsung login)* | `kcd` | `admin` | Akses penuh pengaturan profil lembaga, sinkronisasi wilayah kerja, master data, kelola sekolah, kelola supervisor, verifikasi, statistik, & ekspor seluruh data |
+| **Supervisor** | `/login-kcd` | *(Langsung login)* | `supervisor` | `123456` | Akses monitoring data sekolah serta verifikasi (*approve/reject*) pengajuan data sekolah |
+| **Operator Sekolah** | `/login-sekolah` | Pilih Kecamatan & Sekolah terkait | `operator12345678` | `123456` | Akses penuh **Lihat & Kelola (Tambah/Edit/Hapus/Impor/Ekspor)** seluruh data pada sekolahnya & ajukan verifikasi |
 | **Kepala Sekolah (Kepsek)** | `/login-sekolah` | Pilih Kecamatan & Sekolah terkait | `kepsek12345678` | `123456` | Akses **Monitoring (Read-Only)** seluruh data sekolah dan unduh laporan/ekspor data sekolahnya |
 
 > **Catatan:** Saat Admin KCD menambahkan sekolah baru dengan NPSN tertentu, sistem secara otomatis membuat dua akun default:
 > - **Operator Sekolah:** username `operator<NPSN>`, password default `123456`
 > - **Kepala Sekolah:** username `kepsek<NPSN>`, password default `123456`
+
+### 2. Website Portal — Website Profil Cadisdik (CodeIgniter 3 — folder `cadisdik/`)
+Pastikan **Apache** di XAMPP aktif dan folder project berada di dalam `htdocs`.
+
+- **Beranda Portal Publik:** `http://localhost/gisdapo.videaclass/cadisdik/`
+- **Login Administrator Portal:** `http://localhost/gisdapo.videaclass/cadisdik/administrator`
+- **Registrasi / Login Tamu (Guest):** `http://localhost/gisdapo.videaclass/cadisdik/guest/register`
+
+*(Sesuaikan bagian `gisdapo.videaclass` dengan nama folder tempat project di-clone di dalam `htdocs`.)*
+
+| Role | Halaman Login | Username | Password |
+| :--- | :--- | :--- | :--- |
+| **Administrator Portal** | `/cadisdik/administrator` | `admin` | `admin123` |
+| **Admin Sekolah (Portal)** | Login Sekolah Portal | `sekolah1` | `123456` |
+
+*(Jika akun portal belum tersedia di database lokal, jalankan `php create_admin.php` dan `php create_school_admin.php` dari dalam folder `cadisdik/`.)*
 
 ---
 

@@ -140,6 +140,15 @@ Route::group(['middleware' => ['kcd']], function () {
     Route::delete('/kcd/kategori/{id}', [\App\Http\Controllers\KcdMasterController::class, 'destroyKategori'])->name('kcd.master.kategori.destroy');
     // Route::get('/kcd/kategori/{id}/toggle', [\App\Http\Controllers\KcdMasterController::class, 'toggleKategori'])->name('kcd.master.kategori.toggle');
 
+    // Verifikasi & Approval Data (Supervisor & Admin KCD)
+    Route::get('/kcd/verifikasi', [\App\Http\Controllers\VerifikasiController::class, 'index'])->name('kcd.verifikasi.index');
+    Route::post('/kcd/verifikasi/{id}/approve', [\App\Http\Controllers\VerifikasiController::class, 'approve'])->name('kcd.verifikasi.approve');
+    Route::post('/kcd/verifikasi/{id}/reject', [\App\Http\Controllers\VerifikasiController::class, 'reject'])->name('kcd.verifikasi.reject');
+
+    // Manajemen Akun Supervisor (Khusus Admin KCD)
+    Route::get('/kcd/supervisor', [\App\Http\Controllers\VerifikasiController::class, 'indexSupervisor'])->name('kcd.supervisor.index');
+    Route::post('/kcd/supervisor', [\App\Http\Controllers\VerifikasiController::class, 'storeSupervisor'])->name('kcd.supervisor.store');
+    Route::delete('/kcd/supervisor/{id}', [\App\Http\Controllers\VerifikasiController::class, 'destroySupervisor'])->name('kcd.supervisor.destroy');
 
 });
 //sekolah
@@ -168,6 +177,7 @@ Route::group(['middleware' => ['sekolah']], function () {
     Route::get('/sekolah/ruangan/ekspor', [ExportSekolahController::class, 'exportRuangan']);
     Route::get('/sekolah/rombel/ekspor', [ExportSekolahController::class, 'exportRombel']);
     Route::get('/sekolah/guru/ekspor', [ExportSekolahController::class, 'exportGuru']);
+    Route::get('/sekolah/verifikasi', [\App\Http\Controllers\VerifikasiController::class, 'sekolahIndex'])->name('sekolah.verifikasi.index');
 });
 
 Route::group(['middleware' => ['operator_sekolah']], function () {
@@ -258,6 +268,9 @@ Route::group(['middleware' => ['operator_sekolah']], function () {
 
 //    pdf
     Route::get('/sekolah/pdf/{id}', [CrudRuanganController::class, 'pdfsarpras'])->name('pdfsarpras');
+
+//    pengajuan verifikasi
+    Route::post('/sekolah/verifikasi/ajukan', [\App\Http\Controllers\VerifikasiController::class, 'ajukanSekolah'])->name('sekolah.verifikasi.ajukan');
 });
 
 Route::get('/debug-profil', function() {

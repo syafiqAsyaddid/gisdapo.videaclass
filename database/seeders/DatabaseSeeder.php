@@ -46,6 +46,17 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        // Supervisor (hak_akses_id = 4) - di bawah Admin, full akses & verifikasi/approval data
+        User::updateOrCreate(
+            ['username' => 'supervisor'],
+            [
+                'hak_akses_id' => 4,
+                'sekolah_id' => null,
+                'password' => \Illuminate\Support\Facades\Hash::make('123456'),
+                'remember_token' => \Illuminate\Support\Str::random(10),
+            ]
+        );
+
         // Operator Sekolah (hak_akses_id = 1)
         $opUser = User::updateOrCreate(
             ['username' => 'operator12345678'],
